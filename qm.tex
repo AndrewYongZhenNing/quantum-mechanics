@@ -1,0 +1,154 @@
+%\documentclass[10pt]{iopart}
+\documentclass{article}
+\usepackage{geometry}
+\usepackage[nottoc]{tocbibind}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{slashed}
+\usepackage{bbold}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[percent]{overpic}
+\usepackage{cite}
+\usepackage{yfonts}
+\usepackage{physics}
+\usepackage{todonotes}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{axodraw4j} %for Feynman diagrams
+
+%Uncomment next line if AMS fonts required
+%\usepackage{iopams}
+\numberwithin{equation}{section} %allows numbering of equations to include section number
+\usepackage[utf8x]{inputenc}
+\geometry{a4paper, total={6in, 8in}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=red,
+    citecolor=purple   
+}
+
+\allowdisplaybreaks
+
+\begin{document}
+
+
+\begin{titlepage}
+\begin{center}
+\vspace*{1.5cm}
+
+{\large Let's Chat About \\ \vspace{0.25cm}\LARGE \textit{Quantum Mechanics}}\\
+\vspace{3cm}
+Andrew Zhen Ning Yong\\
+\vspace{0.25cm}
+
+Department of Physics \& Astronomy\\
+University of Edinburgh
+
+\vspace{7cm}
+
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Preamble}
+First, something of an explanation and a disclaimer regarding this document.
+
+This is my attempt at writing an informal discussion based on the content in the PHYS09053/09051 Quantum Mechanics course by C. Stock and A. Huxley. Needless to say, at best, this document should be read \textit{in complement with} the lecture notes provided, rather than instead of. 
+
+One final thing before we start: I am prone to careless mistakes, especially where signs and numerical factors are concerned. So, if you notice anything suspicious with the expressions detailed below, please send me an email or send a pull request to my git repository.\\
+
+\noindent Now let's chat about Quantum Mechanics.
+
+\section{An Electron and Its Proton Pal}
+\subsection{Spin-Orbit Interaction}
+\todo[inline]{To be written up}
+
+\section{An Amber of Electrons}
+In the above, we have described the going-ons of a hydrogen atom. Already with just a single proton and electron, we discover some pretty interesting phenomena that a lonely electron would not experience, \textit{eg} the spin-orbit interaction. However, there is a whole periodic table of atoms, and all but save the hydrogen has multiple electrons. This leads us nicely to the physics of identical particles.
+
+In quantum mechanics, the term `identical' (or indistinguishable) has a specific meaning. That is, for a system with identical particles (\textit{eg} an amber\footnote{not actual collective noun} of electrons), the measurable observables (\textit{eg} the energy levels) must be invariant under the exchange of labels assigned to the particles. Let's put this in practice. 
+
+Consider the Schr\"odinger equation for a system of two non-interacting particles with spin $s_1$ and $s_2$ in a box:
+
+\begin{equation}
+-\frac{\hbar}{2m}\left( \frac{\partial^2}{\partial x_1^2} + \frac{\partial^2 }{\partial x_2^2}\right)\Psi(x_1,s_1;x_2,s_2) + V(x_1,x_2)\Psi(x_1,s_1;x_2,s_2) = E\Psi(x_1,s_1;x_2,s_2),
+\label{multi particle TISE}
+\end{equation}
+where $\Psi(x_1,s_1;x_2,s_2)$ is the wavefunction representing the two identical particles. Now we may ask: what form could the wavefunction $\Psi$ take? Keeping in mind that observables should \textit{not} be altered by an exchange of labels (\textit{ie} swapping spatial coordinates), there are two possible solutions to Equation \ref{multi particle TISE}:
+
+\begin{equation}
+\begin{split}
+\Psi_S(x_1,s_1;x_2,s_2) &= \frac{1}{\sqrt{2}} \left( \psi_{1}(x_1,s_1)\psi_{2}(x_2,s_2) + \psi_{1}(x_2,s_2)\psi_{2}(x_1,s_1)\right),\\
+\Psi_A(x_1,s_1;x_2,s_2) &=\frac{1}{\sqrt{2}} \left( \psi_{1}(x_1,s_1)\psi_{2}(x_2,s_2) - \psi_{1}(x_2,s_2)\psi_{2}(x_1,s_1)\right),\\
+\end{split} 
+\end{equation}
+where $\psi$ are the wavefunctions of the individual particles and the subscripts $`S'$ and $`A'$ stand for symmetric and antisymmetric respectively. They are called as such because of the following property
+
+\begin{equation}
+\Psi_{S/A}(x_1,s_1;x_2,s_2) = \pm \Psi_{S/A}(x_2,s_1;x_1,s_2).
+\end{equation}
+Note that while $\Psi_{S/A}$ picks up different signs under exchange of $x_i$ or $s_i$, observables associated to this wavefunction does not. For example, check for yourself that the measurement of the probability density function, $\vert \Psi \vert^2$ is invariant under exchange of coordinate or spin labels.
+
+Here, I will quote the version of Pauli's Exclusion Principle from \cite{eisberg} that is relevant to us:\\
+
+\noindent \textit{A system containing several electrons must be described by an antisymmetric total eigenfunction}(wavefunction).\\
+
+Since electrons have spin, we have two possible combinations that make an overall antisymmetric wavefunction. Using the bra-ket notation for brevity, we have: \\
+
+\noindent\textbf{1}. symmetric in space, antisymmetric in spin:
+\begin{equation}
+\ket{\Psi_A}=\frac{1}{2}\left(\ket{x_1,x_2} + \ket{x_2,x_1}  \right) \left( \ket{\uparrow,\downarrow}-\ket{\downarrow,\uparrow} \right).
+\label{singlet}
+\end{equation}
+
+\noindent\textbf{2}. antisymmetric in space, symmetric in spin:
+\begin{align}
+\ket{\Psi_A}&=\frac{1}{\sqrt{2}}\left(\ket{x_1,x_2} - \ket{x_2,x_1}  \right) \ket{\uparrow,\uparrow},\label{triplet1}\\
+\ket{\Psi_A}&=\frac{1}{2}\left(\ket{x_1,x_2} - \ket{x_2,x_1}  \right) \left( \ket{\uparrow,\downarrow}+\ket{\downarrow,\uparrow} \right),\label{triplet2}\\
+\ket{\Psi_A}&=\frac{1}{\sqrt{2}}\left(\ket{x_1,x_2} - \ket{x_2,x_1}  \right) \ket{\downarrow,\downarrow}\label{triplet3}.
+\end{align}
+Since we are dealing with electrons, I labelled the spin part with $\uparrow$ and $\downarrow$, meaning spin-up and down respectively. In the notation above, Equation \ref{singlet} is what we call a \textit{singlet} state and Equations \ref{triplet1}-\ref{triplet3} are called the \textit{triplet} states.
+
+Here comes my favourite aspect of identical particles. Let us continue with the case of two electrons in a box with no interaction between them. Consider what happens to the probability density when two identical particles approach each other in the box. There are two scenarios again, which I write with a $\pm$ below:
+
+\begin{equation}
+\begin{split}
+\lim_{x_1\rightarrow x_2} \vert\braket{\Psi_A}\vert^2 &= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left(\bra{x_1,x_2}\pm\bra{x_2,x_1} \right)\cdot \left(\ket{x_1,x_2}\pm\ket{x_2,x_1} \right),\\
+&= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left( \bra{x_1,x_2}\ket{x_1,x_2} + \bra{x_2,x_1}\ket{x_2,x_1} \right.\\
+&\quad\quad\quad\quad\quad\quad\quad\quad\left. \pm ( \bra{x_1,x_2}\ket{x_2,x_1} + \bra{x_2,x_1}\ket{x_1,x_2} ) \right),\\
+&= \frac{1}{2}\left( \bra{x,x}\ket{x,x} + \bra{x,x}\ket{x,x} \right.\\
+&\quad\quad\quad\quad\left. \pm ( \bra{x,x}\ket{x,x} + \bra{x,x}\ket{x,x} ) \right).
+\end{split}
+\end{equation}
+\footnote{The keen learner may ask if it is reasonable to exclude the spin component in the equation above. Since the probability density appears in an integration over \textbf{spatial} variables, we can expect the spins to orthonormalise appropriately.}I hope it is clear the $\pm$ corresponds to the singlet and triplet states respectively. Now, consider the consequence. For the case of the singlet, we have a `+', and so the probability density is enhanced by the cross terms by a factor of 2. In the case of the triplet states, the cross terms reduce the probability density to zero as the electrons approach each other.
+
+The interpretation is clear yet profound. When the spins are antialigned (singlet state), there exists an \textit{attractive} force that enhances the probability density - so we can expect to \textbf{find electrons with `opposite' spins clumping together}. On the other hand, if the two electrons have the same alignment, there exists a \textit{repulsive} force such that the probability density vanishes as they coincide. This means, statistically, \textbf{electrons with the `same' spin tend to stay apart}. Remember, we haven't introduced Coulomb interaction at this stage - so this attractive/repulsive force arises from the fact that these are identical particles!
+
+That's enough chat about identical particles for now. In the following, let's look at two most obvious interactions we can think of for a system of a positive nucleus and two electrons.
+
+\subsection{Nuclear Coulomb Attraction}
+
+\subsection{Inter-electron Coulomb Repulsion}
+
+
+
+
+\newpage
+\bibliographystyle{ieeetr} %the command ieeetr sorts citations in order  of appearance
+\bibliography{qmBib}
+
+
+\end{document}
+
