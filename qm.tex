@@ -19,6 +19,7 @@
 \usepackage{todonotes}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{tcolorbox}
 %\usepackage{axodraw4j} %for Feynman diagrams
 
 %Uncomment next line if AMS fonts required
@@ -80,68 +81,146 @@ In the above, we have described the going-ons of a hydrogen atom. Already with j
 
 In quantum mechanics, the term `identical' (or indistinguishable) has a specific meaning. That is, for a system with identical particles (\textit{eg} an amber\footnote{not actual collective noun} of electrons), the measurable observables (\textit{eg} the energy levels) must be invariant under the exchange of labels assigned to the particles. Let's put this in practice. 
 
-Consider the Schr\"odinger equation for a system of two non-interacting particles with spin $s_1$ and $s_2$ in a box:
-
-\begin{equation}
--\frac{\hbar}{2m}\left( \frac{\partial^2}{\partial x_1^2} + \frac{\partial^2 }{\partial x_2^2}\right)\Psi(x_1,s_1;x_2,s_2) + V(x_1,x_2)\Psi(x_1,s_1;x_2,s_2) = E\Psi(x_1,s_1;x_2,s_2),
-\label{multi particle TISE}
-\end{equation}
-where $\Psi(x_1,s_1;x_2,s_2)$ is the wavefunction representing the two identical particles. Now we may ask: what form could the wavefunction $\Psi$ take? Keeping in mind that observables should \textit{not} be altered by an exchange of labels (\textit{ie} swapping spatial coordinates), there are two possible solutions to Equation \ref{multi particle TISE}:
-
-\begin{equation}
-\begin{split}
-\Psi_S(x_1,s_1;x_2,s_2) &= \frac{1}{\sqrt{2}} \left( \psi_{1}(x_1,s_1)\psi_{2}(x_2,s_2) + \psi_{1}(x_2,s_2)\psi_{2}(x_1,s_1)\right),\\
-\Psi_A(x_1,s_1;x_2,s_2) &=\frac{1}{\sqrt{2}} \left( \psi_{1}(x_1,s_1)\psi_{2}(x_2,s_2) - \psi_{1}(x_2,s_2)\psi_{2}(x_1,s_1)\right),\\
-\end{split} 
-\end{equation}
-where $\psi$ are the wavefunctions of the individual particles and the subscripts $`S'$ and $`A'$ stand for symmetric and antisymmetric respectively. They are called as such because of the following property
-
-\begin{equation}
-\Psi_{S/A}(x_1,s_1;x_2,s_2) = \pm \Psi_{S/A}(x_2,s_1;x_1,s_2).
-\end{equation}
-Note that while $\Psi_{S/A}$ picks up different signs under exchange of $x_i$ or $s_i$, observables associated to this wavefunction does not. For example, check for yourself that the measurement of the probability density function, $\vert \Psi \vert^2$ is invariant under exchange of coordinate or spin labels.
-
-Here, I will quote the version of Pauli's Exclusion Principle from \cite{eisberg} that is relevant to us:\\
+First, I will quote the version of Pauli's Exclusion Principle from \cite{eisberg} that is relevant to us:\\
 
 \noindent \textit{A system containing several electrons must be described by an antisymmetric total eigenfunction}(wavefunction).\\
 
-Since electrons have spin, we have two possible combinations that make an overall antisymmetric wavefunction. Using the bra-ket notation for brevity, we have: \\
+Since electrons have spin, we have two possible combinations that make an overall antisymmetric wavefunction. Let $\psi_i$ and $\chi_i$ be the $i$'th electron's spatial and spin wavefunction respectively, we have: \\
 
 \noindent\textbf{1}. symmetric in space, antisymmetric in spin:
 \begin{equation}
-\ket{\Psi_A}=\frac{1}{2}\left(\ket{x_1,x_2} + \ket{x_2,x_1}  \right) \left( \ket{\uparrow,\downarrow}-\ket{\downarrow,\uparrow} \right).
+\Psi_A(x_1,x_2;s_1,s_2)=\frac{1}{2}\left(\psi_1(x_1)\psi_2(x_2) + \psi_1(x_2)\psi_2(x_1) \right) \left( \chi_1(s_1)\chi_2(s_2) - \chi_1(s_2)\chi_2(s_1) \right).
 \label{singlet}
 \end{equation}
 
 \noindent\textbf{2}. antisymmetric in space, symmetric in spin:
 \begin{align}
-\ket{\Psi_A}&=\frac{1}{\sqrt{2}}\left(\ket{x_1,x_2} - \ket{x_2,x_1}  \right) \ket{\uparrow,\uparrow},\label{triplet1}\\
-\ket{\Psi_A}&=\frac{1}{2}\left(\ket{x_1,x_2} - \ket{x_2,x_1}  \right) \left( \ket{\uparrow,\downarrow}+\ket{\downarrow,\uparrow} \right),\label{triplet2}\\
-\ket{\Psi_A}&=\frac{1}{\sqrt{2}}\left(\ket{x_1,x_2} - \ket{x_2,x_1}  \right) \ket{\downarrow,\downarrow}\label{triplet3}.
+\Psi_A(x_1,x_2;s_1,s_2) &=\frac{1}{\sqrt{2}}\left(\psi_1(x_1)\psi_2(x_2) - \psi_1(x_2)\psi_2(x_1) \right) \chi_1(s_1)\chi_2(s_1),\label{triplet1}\\
+\Psi_A(x_1,x_2;s_1,s_2) &=\frac{1}{2}\left(\psi_1(x_1)\psi_2(x_2) - \psi_1(x_2)\psi_2(x_1) \right) \left( \chi_1(s_1)\chi_2(s_2) + \chi_1(s_2)\chi_2(s_1) \right),\label{triplet2}\\
+\Psi_A(x_1,x_2;s_1,s_2) &=\frac{1}{\sqrt{2}}\left(\psi_1(x_1)\psi_2(x_2) - \psi_1(x_2)\psi_2(x_1) \right) \chi_1(s_2)\chi_2(s_2)\label{triplet3}.
 \end{align}
-Since we are dealing with electrons, I labelled the spin part with $\uparrow$ and $\downarrow$, meaning spin-up and down respectively. In the notation above, Equation \ref{singlet} is what we call a \textit{singlet} state and Equations \ref{triplet1}-\ref{triplet3} are called the \textit{triplet} states.
+In the notation above, Equation \ref{singlet} is what we call a \textit{singlet} state and Equations \ref{triplet1}-\ref{triplet3} are called the \textit{triplet} states. The subscript `A' stands for antisymmetric. That is, it has the following properties
 
-Here comes my favourite aspect of identical particles. Let us continue with the case of two electrons in a box with no interaction between them. Consider what happens to the probability density when two identical particles approach each other in the box. There are two scenarios again, which I write with a $\pm$ below:
+\begin{equation}
+\Psi_A(x_1,x_2;s_1,s_2) = - \Psi_A(x_2,x_1;s_2,s_1).
+\end{equation}
+However, as mentioned in the second paragraph, the observables are invariant under the exchange of the labels $\{x_i,s_i\}$. I encourage you to verify this by swapping the labels for a simple obserable, \textit{eg} the probability density $\vert \Psi_A\vert^2$.
+
+Here comes my favourite aspect of identical particles.  Consider what happens to the probability density when two identical particles approach each other in the box. There are two scenarios again, which I write with a $\pm$ below:
 
 \begin{equation}
 \begin{split}
-\lim_{x_1\rightarrow x_2} \vert\braket{\Psi_A}\vert^2 &= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left(\bra{x_1,x_2}\pm\bra{x_2,x_1} \right)\cdot \left(\ket{x_1,x_2}\pm\ket{x_2,x_1} \right),\\
-&= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left( \bra{x_1,x_2}\ket{x_1,x_2} + \bra{x_2,x_1}\ket{x_2,x_1} \right.\\
-&\quad\quad\quad\quad\quad\quad\quad\quad\left. \pm ( \bra{x_1,x_2}\ket{x_2,x_1} + \bra{x_2,x_1}\ket{x_1,x_2} ) \right),\\
-&= \frac{1}{2}\left( \bra{x,x}\ket{x,x} + \bra{x,x}\ket{x,x} \right.\\
-&\quad\quad\quad\quad\left. \pm ( \bra{x,x}\ket{x,x} + \bra{x,x}\ket{x,x} ) \right).
+\lim_{x_1,x_2\rightarrow x} \vert\Psi_A(x_1,x_2;s_1,s_2)\vert^2 &= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left(\psi^*_1(x_1)\psi^*_2(x_2)\pm\psi^*_1(x_2)\psi^*_2(x_1) \right)\cdot \left(\psi_1(x_1)\psi_2(x_2)\pm\psi_1(x_2)\psi_2(x_1) \right),\\
+&= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left( \vert\psi_1(x_1)\vert^2 \vert\psi_2(x_2)\vert^2 + \vert\psi_1(x_2)\vert^2 \vert\psi_2(x_1)\vert^2  \right.\\
+&\quad\quad\quad\quad\quad\quad\quad\quad\left. \pm ( \psi_1^*(x_1)\psi_1(x_2)\psi_2^*(x_2)\psi_2(x_1) + \psi^*_1(x_2)\psi_1(x_1)\psi^*_2(x_1)\psi_2(x_2) ) \right),\\
+&= \frac{1}{2}\lim_{x_1,x_2\rightarrow x} \left( \vert\psi_1(x_1)\vert^2 \vert\psi_2(x_2)\vert^2 + \vert\psi_1(x_2)\vert^2 \vert\psi_2(x_1)\vert^2  \right.\\
+&\quad\quad\quad\quad\quad\quad\quad\quad\left. \pm (\vert\psi_1(x_1)\vert^2 \vert\psi_2(x_2)\vert^2 + \vert\psi_1(x_2)\vert^2 \vert\psi_2(x_1)\vert^2 \right),\\
 \end{split}
 \end{equation}
 \footnote{The keen learner may ask if it is reasonable to exclude the spin component in the equation above. Since the probability density appears in an integration over \textbf{spatial} variables, we can expect the spins to orthonormalise appropriately.}I hope it is clear the $\pm$ corresponds to the singlet and triplet states respectively. Now, consider the consequence. For the case of the singlet, we have a `+', and so the probability density is enhanced by the cross terms by a factor of 2. In the case of the triplet states, the cross terms reduce the probability density to zero as the electrons approach each other.
 
-The interpretation is clear yet profound. When the spins are antialigned (singlet state), there exists an \textit{attractive} force that enhances the probability density - so we can expect to \textbf{find electrons with `opposite' spins clumping together}. On the other hand, if the two electrons have the same alignment, there exists a \textit{repulsive} force such that the probability density vanishes as they coincide. This means, statistically, \textbf{electrons with the `same' spin tend to stay apart}. Remember, we haven't introduced Coulomb interaction at this stage - so this attractive/repulsive force arises from the fact that these are identical particles!
+The interpretation is clear yet profound. When the spins are anti-aligned (singlet state), there exists an \textit{attractive} force that enhances the probability density - so we can expect to \textbf{find electrons with `opposite' spins clumping together}. On the other hand, if the two electrons have the same alignment, there exists a \textit{repulsive} force such that the probability density vanishes as they coincide. This means, statistically, \textbf{electrons with the `same' spin tend to stay apart}. Remember, we haven't introduced Coulomb interaction at this stage - so this attractive/repulsive force arises from the fact that these are identical particles!
 
-That's enough chat about identical particles for now. In the following, let's look at two most obvious interactions we can think of for a system of a positive nucleus and two electrons.
+That's enough chat about identical particles for now. In the following, let's look at two most obvious interactions we can think of for a system with two electrons.
 
-\subsection{Nuclear Coulomb Attraction}
+\subsection{Nuclear-Electron Coulomb Attraction}\label{coulomb attraction}
 
-\subsection{Inter-electron Coulomb Repulsion}
+Simply put: we have a nucleus that has a net positive charge, and we have electrons that are negatively-charged - they will feel a Coulomb attraction from each other. We can quantify this interaction in the following Hamiltonian
 
+\begin{equation}
+H_0=\frac{Ze^2}{4\pi\epsilon_0r_1} + \frac{Ze^2}{4\pi\epsilon_0r_2},
+\label{coulomb attraction hamiltonian}
+\end{equation}
+where $r_i$ corresponds to the $i$'th electron's distance  from the nucleus. 
+
+A moment's glance and you will recognise each term to be just the usual Coulomb potential term. This time, we have $Z=2$ for a nucleus with two protons. We can write this nucleus-electron interaction as a sum (as opposed to a product) because the Coulomb attraction experienced by each electron is independent of the other. In other words, whatever force electron 1 feels due to the nucleus does not in any way affect what electron 2 experiences. 
+
+In physics lingo, we say this interaction is \textbf{separable}. That is, the interactions of each electrons can be neatly separated out into a sum(or products). In the following, we will meet an interaction which is not trivially separable.
+
+\begin{tcolorbox}[colback=pink]
+Hamiltonian for the Nuclear-Electron Coulomb Interaction
+\begin{equation}
+H_0=\frac{Ze^2}{4\pi\epsilon_0r_1} + \frac{Ze^2}{4\pi\epsilon_0r_2}.
+\end{equation}
+\end{tcolorbox}
+
+\subsection{Electron-Electron Coulomb Repulsion}
+
+In a similar fashion to \S\ref{coulomb attraction}, the electrons can feel the charge of their fellow neighbours and, since they have identical charges, experience a Coulomb repulsion. We can write this interaction as
+
+\begin{equation}
+\begin{split}
+H_1&=\sum_{i>j} \frac{e^2}{4\pi\epsilon_0\vert r_i-r_j\vert}, \quad (\geq \text{2 electrons})\\
+&= \frac{e^2}{4\pi\epsilon_0\vert r_1-r_2\vert} \quad (\text{2 electrons}).
+\end{split}
+\end{equation}
+For more than two electrons we have a concise expression in the first line. The summation $\sum_{i>j}$ ensures that we do not double count the number of interaction terms since the Coulomb repulsion experienced by electron $i$ due to electron $j$ is exactly identical to that felt by electron $j$ due to electron $i$.
+
+Suppose we treat $H_1$ as a perturbation to the system described by the Hamiltonian in Equation \ref{coulomb attraction hamiltonian}. Let's see how the energy shifts in the following example cases. In the following, the notation $\bra{\alpha_1}\bra{\beta_1} \ket{\alpha_2}\ket{\beta_2} = \bra{\alpha_1}\ket{\alpha_2}\bra{\beta_1}\ket{\beta_2}$, \textit{ie} the leftmost bra acts with the leftmost ket and so forth.\\
+
+\noindent\textbf{1}. The Ground State\\
+
+In the ground state, the spin of the electrons must be anti-aligned. So we use the singlet expression as in Equation \ref{singlet}. We can quantify the energy shift on the ground state (1s) energy as:
+
+\begin{equation}
+\begin{split}
+\Delta E&=\mel{1s,1s}{\hat{H}_1}{1s,1s},\\
+&= \frac{e^2}{4\pi\epsilon_0}\mel{1s,1s}{\frac{1}{\vert \hat{r}-\hat{r}'\vert}}{1s,1s},\\
+&=\frac{e^2}{4\pi\epsilon_0}\cdot \frac{1}{2}\int d^3r_1d^3r_2 (\bra{1s}\ket{r_2}\bra{1s}\ket{r_1} + \bra{1s}\ket{r_2}\bra{1s}\ket{r_1})\frac{1}{\vert r_1-r_2\vert}(\bra{r_1}\ket{1s}\bra{r_2}\ket{1s} + \bra{r_1}\ket{1s}\bra{r_2}\ket{1s}),\\
+&=\frac{e^2}{4\pi\epsilon_0}\cdot \frac{1}{2}\int d^3r_1d^3r_2 (\psi^*_{1s}(r_2)\psi^*_{1s}(r_1) + \psi^*_{1s}(r_2)\psi^*_{1s}(r_1))\frac{1}{\vert r_1-r_2\vert}(\psi_{1s}(r_1)\psi_{1s}(r_2) + \psi_{1s}(r_1)\psi_{1s}(r_2)),\\
+&=\frac{e^2}{4\pi\epsilon_0}\cdot 2\int d^3r_1d^3r_2  \frac{\vert\psi_{1s}(r_1)\vert^2\vert\psi_{1s}(r_2)\vert^2}{\vert r_1-r_2\vert},\\
+\end{split}
+\end{equation}
+where in the third line I have used the completeness relation, $\mathbb{1}=\int d^3r \ket{r}\bra{r}$ and the factor of 2 in the final line comes from both electron being in the same state $n=1, L=0$ state.
+
+Now, you might ask: have I forgotten the spin part? To which I will answer: the interaction Hamiltonian, $H_1$ depends only on the separation distance between the electrons, \textit{i.e} it doesn't care whether the particle has spin or not. Thus, the spin part just normalises to unity, which I encourage you to check.
+
+To evaluate the integral, we use the hydrogen wavefunction with $n=1, L=0$ as we have shown in Problem Sheet 7.\\
+
+\noindent\textbf{2}. First Excited State
+
+In the first excited state, things become more interesting. As an electron is promoted to the $n=2$ state, it can enter either the s- or the p-shell, where $L=0, 1$ respectively. Since both electrons are in different states, we are now confronted with the option of a singlet or triplet state again since the spins can be either parallel or anti-parallel. In the following, I will denote $+/-$ on the spatial wavefunctions for the singlet and triplet states respectively. \\
+
+\noindent\textbf{2.1}. Excited Electron in 2s-shell
+
+Both electrons are in the s-shell. So, $l_1=l_2=0 \Rightarrow L=0$. Again, ignoring the spin component for this Hamiltonian:
+
+\begin{equation}
+\begin{split}
+\Delta E(L=0) &=\mel{1s,2s}{\hat{H}_1}{1s,2s},\\
+&=\frac{e^2}{4\pi\epsilon_0}\cdot \frac{1}{2}\int d^3r_1d^3r_2 (\bra{1s}\ket{r_2}\bra{2s}\ket{r_1} \pm \bra{2s}\ket{r_2}\bra{1s}\ket{r_1})\frac{1}{\vert r_1-r_2\vert}(\bra{r_1}\ket{1s}\bra{r_2}\ket{2s} \pm \bra{r_1}\ket{2s}\bra{r_2}\ket{1s}),\\
+&=\frac{e^2}{4\pi\epsilon_0}\cdot \frac{1}{2}\int d^3r_1d^3r_2 (\psi^*_{1s}(r_2)\psi^*_{2s}(r_1) + \psi^*_{2s}(r_2)\psi^*_{1s}(r_1))\frac{1}{\vert r_1-r_2\vert}(\psi_{1s}(r_1)\psi_{2s}(r_2) + \psi_{2s}(r_1)\psi_{1s}(r_2)),\\
+&=\frac{e^2}{4\pi\epsilon_0}\cdot \frac{1}{2}\int d^3r_1d^3r_2 
+\frac{\overbrace{\vert\psi_{1s}(r_1)\vert^2\vert\psi_{2s}(r_2)\vert^2}^{\text{direct term}} \pm \overbrace{\psi_{1s}^*(r_2)\psi_{2s}(r_2)\psi_{1s}(r_1)\psi^*_{2s}(r_1)}^{\text{exchange term}}}{\vert r_1-r_2\vert}.
+\end{split}
+\end{equation}
+The first term, labelled the `direct term', together with the $e^2$ out front, gives us the charge density. However, we pick up an additional term as well, which I have labelled the `exchange term'. Once again, the very fact that we are dealing with identical particles has given rise to an enhancement/suppression of the charge density due to the singlet/triplet state.
+
+So, you see, even though $H_1$ is `blind' to the fact that electrons carry spin, the intrinsic quality of spin in electrons helps us to distinguish them when we observe the energy spectrum!
+
+\noindent\textbf{2.2}. Excited Electron in 2p-shell
+
+Now, suppose one of the electron is promoted to the 2p shell. So $l_1=0, l_2=1 \Rightarrow L=1$. Algebraically, having an electron in the 2p-shell gives an energy shift of the same form, so we skip to the final line:
+
+\begin{equation}
+\begin{split}
+\Delta E(L=1) &=\frac{e^2}{4\pi\epsilon_0}\cdot \frac{1}{2}\int d^3r_1d^3r_2 
+\frac{\overbrace{\vert\psi_{1s}(r_1)\vert^2\vert\psi_{2p}(r_2)\vert^2}^{\text{direct term}} \pm \overbrace{\psi_{1s}^*(r_2)\psi_{2p}(r_2)\psi_{1s}(r_1)\psi^*_{2p}(r_1)}^{\text{exchange term}}}{\vert r_1-r_2\vert}.
+\end{split}
+\end{equation}
+
+What is the difference? Well, look at the exchange term. For each integration, it is a product of two different wavefunctions, $\psi_{1s}\psi_{2p}$. Since $\vert\psi_{1s}\vert^2$ overlaps more with $\vert\psi_{2s}\vert^2$ than $\vert\psi_{2p}\vert^2$ (see plot below), this convolution(aka product) means that the contribution from the exchange term is greater in the $L=0$ than $L=1$. 
+
+
+\todo[inline]{TODO:Put a plot of radial wavefunction}
+
+
+\begin{tcolorbox}[colback=pink]
+Hamiltonian for the Electron-Electron Coulomb Interaction
+\begin{equation}
+H_1=\sum_{i>j} \frac{e^2}{4\pi\epsilon_0\vert r_i-r_j\vert}.
+\end{equation}
+\end{tcolorbox}
 
 
 
